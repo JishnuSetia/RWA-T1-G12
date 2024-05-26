@@ -96,12 +96,32 @@ public class stringManipulation {
             System.out.println(arrangeSentence(s));
         }
     }
-    public void toPiglatin(String s){
+    public String toPiglatin(String s){
+        if(s.length()==0){
+            return "";
+        }
         String punc =Character.isLetter(s.charAt(s.length()-1))||Character.isDigit(s.charAt(s.length()-1))?" ":Character.toString(s.charAt(s.length()-1));
-        
+        String letters = s.substring(0, Character.isLetter(s.charAt(s.length()-1))||Character.isDigit(s.charAt(s.length()-1))?s.length():s.length()-1);
+        if(Character.toUpperCase(letters.charAt(0))=='A'||Character.toUpperCase(letters.charAt(0))=='E'||Character.toUpperCase(letters.charAt(0))=='I'||Character.toUpperCase(letters.charAt(0))=='O'||Character.toUpperCase(letters.charAt(0))=='U'){
+            return letters+"way"+punc;
+        }
+        else{
+            while(true){
+                if(Character.toUpperCase(letters.charAt(0))=='A'||Character.toUpperCase(letters.charAt(0))=='E'||Character.toUpperCase(letters.charAt(0))=='I'||Character.toUpperCase(letters.charAt(0))=='O'||Character.toUpperCase(letters.charAt(0))=='U'){
+                    break;
+                }
+                letters = letters.substring(1).concat(Character.toString(letters.charAt(0)));
+            }
+        }
+        return letters+"ay"+punc;
     }
     public void toPiglatinSentence(){
-
+        for(String s:this.s){
+            String[] sub = s.split(" ");
+            for(String j:sub){
+                System.out.print(toPiglatin(j));
+            }
+        }
     }
     public static void main(String[] args) {
         stringManipulation sm = new stringManipulation();
@@ -110,6 +130,7 @@ public class stringManipulation {
         sm.arrangeSentences();
         System.out.println();
         sm.vowelCounter();
-        
+        System.out.println();
+        sm.toPiglatinSentence();
     }
 }
